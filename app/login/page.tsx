@@ -185,9 +185,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-xs text-center text-gray-400 mt-4">
-          Onboarding Platform · Creative Strategist
-        </p>
+
       </div>
     </div>
   );
