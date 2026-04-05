@@ -50,14 +50,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        {/* Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-xl font-bold text-gray-900">MoovBuddy Training &amp; Onboarding Platform</h1>
-        </div>
-
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+        {/* Logo + Title */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg mb-3">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -72,6 +67,7 @@ export default function LoginPage() {
               />
             </svg>
           </div>
+          <h1 className="text-xl font-bold text-gray-900 text-center">MoovBuddy Training &amp; Onboarding Platform</h1>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
