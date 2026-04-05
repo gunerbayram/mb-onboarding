@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("creative-strategist")
+  language     String   @default("tr")
+  isAdmin      Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  lessonProgress     LessonProgress[]
+  quizAttempts       QuizAttempt[]
+  resourceProgress   ResourceProgress[]
+  resourceNotes      ResourceNote[]
+}
+
+model Chapter {
+  id          String   @id @default(cuid())
+  order       Int
+  slug        String   @unique
+  title       String
+  description String
+  role        String   @default("creative-strategist")
+  createdAt   DateTime @default(now())
+
+  lessons Lesson[]
+  quiz    Quiz?
+}
+
+model Lesson {
+  id        String   @id @default(cuid())
+  chapterId String
+  order     Int
+  slug      String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  chapter  Chapter          @relation(fields: [chapterId], references: [id])
+  progress LessonProgress[]
+
+  @@unique([chapterId, slug])
+}
+
+model Quiz {
+  id        String   @id @default(cuid())
+  chapterId String   @unique
+  title     String
+  createdAt DateTime @default(now())
+
+  chapter   Chapter        @relation(fields: [chapterId], references: [id])
+  questions QuizQuestion[]
+  attempts  QuizAttempt[]
+}
+
+model QuizQuestion {
+  id            String   @id @default(cuid())
+  quizId        String
+  order         Int
+  question      String
+  options       String
+  correctAnswer Int
+  createdAt     DateTime @default(now())
+
+  quiz Quiz @relation(fields: [quizId], references: [id])
+}
+
+model LessonProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  lessonId    String
+  completedAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  lesson Lesson @relation(fields: [lessonId], references: [id])
+
+  @@unique([userId, lessonId])
+}
+
+model QuizAttempt {
+  id             String   @id @default(cuid())
+  userId         String
+  quizId         String
+  score          Int
+  totalQuestions Int
+  completedAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  quiz Quiz @relation(fields: [quizId], references: [id])
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  youtubeUrl  String
+  category    String   @default("General")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  progress ResourceProgress[]
+  notes    ResourceNote[]
+}
+
+model Person {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  url         String
+  platform    String   @default("link")
+  category    String   @default("General")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model ResourceProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  resourceId  String
+  completedAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  resource Resource @relation(fields: [resourceId], references: [id])
+
+  @@unique([userId, resourceId])
+}
+
+model ResourceNote {
+  id         String   @id @default(cuid())
+  userId     String
+  resourceId String
+  content    String
+  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  resource Resource @relation(fields: [resourceId], references: [id])
+
+  @@unique([userId, resourceId])
+}
