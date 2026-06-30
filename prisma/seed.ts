@@ -6,14 +6,9 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("Seeding database...");
 
-  // Clear existing data
-  await prisma.resourceNote.deleteMany();
-  await prisma.resourceProgress.deleteMany();
+  // Clear only content — never touch users or their progress
   await prisma.resource.deleteMany();
   await prisma.person.deleteMany();
-  await prisma.quizAttempt.deleteMany();
-  await prisma.lessonProgress.deleteMany();
-  await prisma.user.deleteMany();
   await prisma.quizQuestion.deleteMany();
   await prisma.quiz.deleteMany();
   await prisma.lesson.deleteMany();
@@ -2079,9 +2074,11 @@ Run a live prompt in ChatGPT or Claude to analyze a sample of recent App Store r
     },
   });
 
-  // Seed users
-  await prisma.user.create({
-    data: {
+  // Seed default users (upsert — never overwrites existing users)
+  await prisma.user.upsert({
+    where: { email: "admin@company.com" },
+    update: {},
+    create: {
       name: "Admin",
       email: "admin@company.com",
       passwordHash: await bcrypt.hash("admin123", 10),
@@ -2091,8 +2088,10 @@ Run a live prompt in ChatGPT or Claude to analyze a sample of recent App Store r
     },
   });
 
-  await prisma.user.create({
-    data: {
+  await prisma.user.upsert({
+    where: { email: "alex@company.com" },
+    update: {},
+    create: {
       name: "Alex Johnson",
       email: "alex@company.com",
       passwordHash: await bcrypt.hash("alex123", 10),
