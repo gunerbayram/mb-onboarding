@@ -55,8 +55,8 @@ function renderMarkdown(text: string): string {
     .replace(/^> (.+)$/gm, "<blockquote class=\"border-l-4 border-indigo-300 pl-4 my-3 italic text-gray-600 text-sm\">$1</blockquote>")
     // Horizontal rules
     .replace(/^---$/gm, "<hr class=\"my-6 border-gray-200\">")
-    // Paragraphs (lines not starting with HTML tags)
-    .replace(/^(?!<[a-z])(.+)$/gm, (line) => {
+    // Paragraphs (lines not starting with block-level HTML tags)
+    .replace(/^(?!<(?:h[1-6]|ul|ol|li|pre|table|div|blockquote|hr))(.+)$/gm, (line) => {
       if (!line.trim()) return line;
       return `<p class="my-2 text-sm text-gray-700">${line}</p>`;
     })

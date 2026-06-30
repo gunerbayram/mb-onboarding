@@ -1570,21 +1570,35 @@ Log into our customer support platform. Filter the tickets from the last 7 days 
             title: "Session 1: Subscription App Business Fundamentals — Güner",
             content: `## Session 1: Subscription App Business Fundamentals
 
-**Presenter:** Güner
+Presenter: **Güner**
 
-**Objective:** Establish the foundational mental model of the subscription economy before touching any tool or data.
+Objective: Establish the foundational mental model of the subscription economy before touching any tool or data.
+
+---
 
 ## Key Topics
 
-**The Renewal Economy:** Why retention matters more than acquisition. The concept of the "leaky bucket" — a high acquisition rate with a high churn rate is unsustainable no matter how much you spend on ads.
+**The Renewal Economy**
 
-**The Growth Funnel:** Walk through the full user journey from Impression to Renewal. What happens at each stage, and why each step matters for the business.
+Why retention matters more than acquisition. The concept of the "leaky bucket" — a high acquisition rate with a high churn rate is unsustainable no matter how much you spend on ads.
 
-**Our Core Metrics:** A high-level overview of our specific targets for Trial Conversion Rate, Month 1 Retention, and Churn. Where we stand today vs. where we want to be.
+**The Growth Funnel**
 
-**The "Aha! Moment":** What is the core action a user must take in our app to realize its value? How long does it currently take them to get there, and why does that matter?
+Walk through the full user journey from Impression to Renewal. What happens at each stage, and why each step matters for the business.
 
-**Historical Context:** Walk through the key decisions that shaped our current business model. What was the biggest growth unlock we have experienced so far?
+**Our Core Metrics**
+
+A high-level overview of our specific targets for Trial Conversion Rate, Month 1 Retention, and Churn. Where we stand today vs. where we want to be.
+
+**The "Aha! Moment"**
+
+What is the core action a user must take in our app to realize its value? How long does it currently take them to get there, and why does that matter?
+
+**Historical Context**
+
+Walk through the key decisions that shaped our current business model. What was the biggest growth unlock we have experienced so far?
+
+---
 
 ## Practical Element
 
@@ -1596,19 +1610,31 @@ Discuss the historical evolution of our app. Review a before/after comparison of
             title: "Session 2: Web-to-App, Web Subscriptions & Web Funnels — Güner",
             content: `## Session 2: Web-to-App, Web Subscriptions & Web Funnels
 
-**Presenter:** Güner
+Presenter: **Güner**
 
-**Objective:** Understand why we bypass the App Store and how our web funnels operate — this is a critical and distinctive part of our distribution strategy.
+Objective: Understand why we bypass the App Store and how our web funnels operate — this is a critical and distinctive part of our distribution strategy.
+
+---
 
 ## Key Topics
 
-**Why Web-to-App?** The margin advantage (Stripe's ~3% fee vs. Apple's 15–30% cut) and the measurement advantage (bypassing SKAdNetwork entirely for perfect attribution).
+**Why Web-to-App?**
 
-**The Web Funnel Architecture:** The full user journey step by step: Ad Click → Landing Page → Quiz → Web Paywall → Stripe Checkout → App Download prompt.
+The margin advantage (Stripe's ~3% fee vs. Apple's 15–30% cut) and the measurement advantage (bypassing SKAdNetwork entirely for perfect attribution).
 
-**The Friction Point:** The drop-off that happens after web purchase but before app install. How we currently mitigate this, and what we have tried.
+**The Web Funnel Architecture**
 
-**A/B Testing on Web:** How we run experiments on the web funnel compared to the native app. The key differences in speed and flexibility.
+The full user journey step by step: Ad Click → Landing Page → Quiz → Web Paywall → Stripe Checkout → App Download prompt.
+
+**The Friction Point**
+
+The drop-off that happens after web purchase but before app install. How we currently mitigate this, and what we have tried.
+
+**A/B Testing on Web**
+
+How we run experiments on the web funnel compared to the native app. The key differences in speed and flexibility.
+
+---
 
 ## Practical Element
 
@@ -1620,19 +1646,31 @@ Go through the live web funnel together as a user. Identify the specific psychol
             title: "Session 3: Business Intelligence & Marketing Analytics (Metabase) — Elif",
             content: `## Session 3: Business Intelligence & Marketing Analytics (Metabase)
 
-**Presenter:** Elif
+Presenter: **Elif**
 
-**Objective:** Understand our financial source of truth and how to pull macro-level reports before diving into behavioral analytics.
+Objective: Understand our financial source of truth and how to pull macro-level reports before diving into behavioral analytics.
+
+---
 
 ## Key Topics
 
-**Data Infrastructure:** How data flows from Stripe, Adapty, and AppsFlyer into our database and then into Metabase. You don't need to understand the engineering, but you need to know where the data comes from and how fresh it is.
+**Data Infrastructure**
 
-**Core Dashboards:** Walk through the 3 most important Metabase dashboards the executive team reviews every week. What each metric means, and what a healthy vs. unhealthy number looks like.
+How data flows from Stripe, Adapty, and AppsFlyer into our database and then into Metabase. You don't need to understand the engineering, but you need to know where the data comes from and how fresh it is.
 
-**Calculating LTV & CAC:** The exact Metabase queries or dashboards we use to calculate LTV and CAC. This is the math you will use to evaluate every campaign decision.
+**Core Dashboards**
 
-**SQL vs. Visual Builder:** How to use the visual query builder for quick questions, and where the complex SQL queries live for deeper analysis.
+Walk through the 3 most important Metabase dashboards the executive team reviews every week. What each metric means, and what a healthy vs. unhealthy number looks like.
+
+**Calculating LTV & CAC**
+
+The exact Metabase queries or dashboards we use to calculate LTV and CAC. This is the math you will use to evaluate every campaign decision.
+
+**SQL vs. Visual Builder**
+
+How to use the visual query builder for quick questions, and where the complex SQL queries live for deeper analysis.
+
+---
 
 ## Practical Element
 
@@ -1644,20 +1682,29 @@ Open Metabase and filter the main revenue dashboard to show only revenue from th
             title: "Session 4: Product Analytics (Amplitude & Firebase) — Elif",
             content: `## Session 4: Product Analytics (Amplitude & Firebase)
 
-**Presenter:** Elif
+Presenter: **Elif**
 
-**Objective:** Learn how to track user behavior inside the app to identify drop-offs and retention issues.
+Objective: Learn how to track user behavior inside the app to identify drop-offs and retention issues.
+
+---
 
 ## Key Topics
 
-**Event Architecture:** Our event taxonomy. The 5 most important events we track, what each event name means, and what properties it carries.
+**Event Architecture**
 
-**Amplitude Fundamentals — Three Core Charts:**
+Our event taxonomy. The 5 most important events we track, what each event name means, and what properties it carries.
+
+**Amplitude Fundamentals — Three Core Charts**
+
 - **Funnel Chart:** Build the core onboarding-to-purchase funnel live and see where the biggest drop-off is.
 - **Retention Chart:** Read our retention curve and understand what a healthy vs. unhealthy curve looks like.
 - **Cohort Analysis:** Compare the behavior of users from two different acquisition channels.
 
-**Firebase vs. Amplitude:** Why we use both. What Firebase is used for specifically (e.g., Crashlytics, basic logging) versus Amplitude (deep behavioral analysis).
+**Firebase vs. Amplitude**
+
+Why we use both. What Firebase is used for specifically (e.g., Crashlytics, basic logging) versus Amplitude (deep behavioral analysis).
+
+---
 
 ## Practical Element
 
@@ -1669,21 +1716,35 @@ Take the mouse and build a funnel in Amplitude comparing the conversion rate of 
             title: "Session 5: Mobile Attribution, MMP, Adapty & AppsFlyer — Elif",
             content: `## Session 5: Mobile Attribution, MMP, Adapty & AppsFlyer
 
-**Presenter:** Elif
+Presenter: **Elif**
 
-**Objective:** Understand how we track where our users come from and how we connect revenue back to ad spend.
+Objective: Understand how we track where our users come from and how we connect revenue back to ad spend.
+
+---
 
 ## Key Topics
 
-**The Basics of Attribution:** The role of an MMP (AppsFlyer) vs. an in-app purchase SDK (Adapty). Why we need both, and how they talk to each other.
+**The Basics of Attribution**
 
-**AppsFlyer Walkthrough:** The main dashboard. Where to look to see campaign-level installs. The difference between click-through and view-through attribution.
+The role of an MMP (AppsFlyer) vs. an in-app purchase SDK (Adapty). Why we need both, and how they talk to each other.
 
-**Adapty Walkthrough:** How Adapty tracks trial starts, conversions, and renewals. How Adapty communicates with AppsFlyer and Amplitude.
+**AppsFlyer Walkthrough**
 
-**The Post-ATT Reality:** SKAdNetwork (SKAN) explained simply. How much signal loss we are seeing on iOS, and how we make decisions when AppsFlyer data and Meta data don't match.
+The main dashboard. Where to look to see campaign-level installs. The difference between click-through and view-through attribution.
 
-**Common Pitfalls:** The most common attribution bugs or data discrepancies we encounter, and how we handle them.
+**Adapty Walkthrough**
+
+How Adapty tracks trial starts, conversions, and renewals. How Adapty communicates with AppsFlyer and Amplitude.
+
+**The Post-ATT Reality**
+
+SKAdNetwork (SKAN) explained simply. How much signal loss we are seeing on iOS, and how we make decisions when AppsFlyer data and Meta data don't match.
+
+**Common Pitfalls**
+
+The most common attribution bugs or data discrepancies we encounter, and how we handle them.
+
+---
 
 ## Practical Element
 
@@ -1695,19 +1756,31 @@ Open AppsFlyer and trace the journey of one recent successful Meta campaign from
             title: "Session 6: Meta Ads — Conversion Measurement & Signal Processing — Furkan",
             content: `## Session 6: Meta Ads — Conversion Measurement & Signal Processing
 
-**Presenter:** Furkan
+Presenter: **Furkan**
 
-**Objective:** Understand the technical side of how Meta knows a conversion happened — this is the foundation for understanding why our campaigns perform the way they do.
+Objective: Understand the technical side of how Meta knows a conversion happened — this is the foundation for understanding why our campaigns perform the way they do.
+
+---
 
 ## Key Topics
 
-**The Signal Problem:** Why device-side tracking (Pixels/SDKs) is losing effectiveness due to iOS privacy restrictions and ad blockers.
+**The Signal Problem**
 
-**Conversions API (CAPI):** How our server sends data back to Meta. Why Event Match Quality is important for campaign performance. What happens to our campaigns when signal quality drops.
+Why device-side tracking (Pixels/SDKs) is losing effectiveness due to iOS privacy restrictions and ad blockers.
 
-**Offline Conversions:** How we handle recurring subscription events (Month 2, Month 3 renewals) and send them back to Meta to optimize for LTV rather than just Day0 revenue.
+**Conversions API (CAPI)**
 
-**Data Discrepancies:** Why Meta Ads Manager numbers will never perfectly match our database, and how to handle that ambiguity in practice when making budget decisions.
+How our server sends data back to Meta. Why Event Match Quality is important for campaign performance. What happens to our campaigns when signal quality drops.
+
+**Offline Conversions**
+
+How we handle recurring subscription events (Month 2, Month 3 renewals) and send them back to Meta to optimize for LTV rather than just Day0 revenue.
+
+**Data Discrepancies**
+
+Why Meta Ads Manager numbers will never perfectly match our database, and how to handle that ambiguity in practice when making budget decisions.
+
+---
 
 ## Practical Element
 
@@ -1719,19 +1792,31 @@ Open Meta Events Manager. Review the health and Event Match Quality of our prima
             title: "Session 7: Meta Ads — Creative Strategy, Fundamentals & Bid Strategy — Damla",
             content: `## Session 7: Meta Ads — Creative Strategy, Fundamentals & Bid Strategy
 
-**Presenter:** Damla
+Presenter: **Damla**
 
-**Objective:** Understand our philosophy on ad creatives, how we structure campaigns, and how we buy media on Meta.
+Objective: Understand our philosophy on ad creatives, how we structure campaigns, and how we buy media on Meta.
+
+---
 
 ## Key Topics
 
-**Campaign Architecture:** How we structure our Meta accounts. The difference between CBO and ABO, and when we use broad targeting vs. lookalikes.
+**Campaign Architecture**
 
-**Bid Strategies:** When we use lowest cost, cost cap, or value optimization (ROAS bidding). The trade-offs of each approach.
+How we structure our Meta accounts. The difference between CBO and ABO, and when we use broad targeting vs. lookalikes.
 
-**Creative Philosophy:** What makes a winning ad for our app. The anatomy of our best creatives — the Hook, the Body, and the CTA — and why each element matters.
+**Bid Strategies**
 
-**Creative Testing Framework:** How we test new concepts without wasting budget. How we decide when to kill an ad and when to scale it.
+When we use lowest cost, cost cap, or value optimization (ROAS bidding). The trade-offs of each approach.
+
+**Creative Philosophy**
+
+What makes a winning ad for our app. The anatomy of our best creatives — the Hook, the Body, and the CTA — and why each element matters.
+
+**Creative Testing Framework**
+
+How we test new concepts without wasting budget. How we decide when to kill an ad and when to scale it.
+
+---
 
 ## Practical Element
 
@@ -1743,19 +1828,31 @@ Open Meta Ads Manager. Look at the top 3 spending ads of the last 7 days and bre
             title: "Session 8: Competitor Analysis, Market Intelligence & Sensor Tower — Damla",
             content: `## Session 8: Competitor Analysis, Market Intelligence & Sensor Tower
 
-**Presenter:** Damla
+Presenter: **Damla**
 
-**Objective:** Learn how to monitor the market and spot opportunities or threats before they impact our performance.
+Objective: Learn how to monitor the market and spot opportunities or threats before they impact our performance.
+
+---
 
 ## Key Topics
 
-**Our Competitor Landscape:** Our top 3 direct competitors. Our unique value proposition compared to each of them.
+**Our Competitor Landscape**
 
-**Sensor Tower Walkthrough:** How to estimate competitor revenue, download volumes, and keyword rankings. What this data tells us, and what its limitations are.
+Our top 3 direct competitors. Our unique value proposition compared to each of them.
 
-**Creative Intelligence:** How to use the Meta Ad Library to review competitor ads. What they are testing right now, and what that tells us about what is working in the market.
+**Sensor Tower Walkthrough**
 
-**Building a Routine:** How often to check competitor activity. What signals should trigger an immediate investigation.
+How to estimate competitor revenue, download volumes, and keyword rankings. What this data tells us, and what its limitations are.
+
+**Creative Intelligence**
+
+How to use the Meta Ad Library to review competitor ads. What they are testing right now, and what that tells us about what is working in the market.
+
+**Building a Routine**
+
+How often to check competitor activity. What signals should trigger an immediate investigation.
+
+---
 
 ## Practical Element
 
@@ -1767,19 +1864,31 @@ Pick one competitor. Find their most active ad in the Meta Ad Library and analyz
             title: "Session 9: Monetization — LTV, ROAS & Day0 Revenue — Damla",
             content: `## Session 9: Monetization — LTV, ROAS & Day0 Revenue
 
-**Presenter:** Damla
+Presenter: **Damla**
 
-**Objective:** Understand the financial math that dictates our growth speed and media buying decisions.
+Objective: Understand the financial math that dictates our growth speed and media buying decisions.
+
+---
 
 ## Key Topics
 
-**The Math of Growth:** Our specific LTV:CAC targets. What our payback period is, and why it matters for how aggressively we can spend on ads.
+**The Math of Growth**
 
-**Day0 Revenue vs. LTV:** Why Day0 revenue is so critical for our cash flow. How Day0 ROAS predicts Day30 ROAS, and how we use this relationship to make campaign decisions.
+Our specific LTV:CAC targets. What our payback period is, and why it matters for how aggressively we can spend on ads.
 
-**Paywall Strategy:** How we price our plans. What A/B tests we have run on the paywall recently, and what the results were.
+**Day0 Revenue vs. LTV**
 
-**Forecasting:** How we project future revenue based on current cohort performance. The model we use.
+Why Day0 revenue is so critical for our cash flow. How Day0 ROAS predicts Day30 ROAS, and how we use this relationship to make campaign decisions.
+
+**Paywall Strategy**
+
+How we price our plans. What A/B tests we have run on the paywall recently, and what the results were.
+
+**Forecasting**
+
+How we project future revenue based on current cohort performance. The model we use.
+
+---
 
 ## Practical Element
 
@@ -1791,17 +1900,27 @@ Review a recent cohort's performance. See how we project their 6-month LTV based
             title: "Session 10: Onboarding (App & Web), User Psychology & CRO — Yusuf Kireççi",
             content: `## Session 10: Onboarding (App & Web), User Psychology & CRO
 
-**Presenter:** Yusuf Kireççi
+Presenter: **Yusuf Kireççi**
 
-**Objective:** Understand the psychology behind our onboarding flow and how we optimize the path to the paywall.
+Objective: Understand the psychology behind our onboarding flow and how we optimize the path to the paywall.
+
+---
 
 ## Key Topics
 
-**Ad-to-Funnel Consistency:** Why the promise made in the Meta ad must exactly match the first screen of the onboarding. Examples of good and bad consistency from our own campaigns or competitors.
+**Ad-to-Funnel Consistency**
 
-**User Psychology:** How we build trust during onboarding. How we use the "IKEA Effect" — making users invest effort via a quiz — to increase paywall conversion. How we touch pain points effectively.
+Why the promise made in the Meta ad must exactly match the first screen of the onboarding. Examples of good and bad consistency from our own campaigns or competitors.
 
-**Conversion Rate Optimization (CRO):** Our A/B testing framework. How we isolate variables. How we decide what to test next. How we read results without stopping a test too early.
+**User Psychology**
+
+How we build trust during onboarding. How we use the "IKEA Effect" — making users invest effort via a quiz — to increase paywall conversion. How we touch pain points effectively.
+
+**Conversion Rate Optimization (CRO)**
+
+Our A/B testing framework. How we isolate variables. How we decide what to test next. How we read results without stopping a test too early.
+
+---
 
 ## Practical Element
 
@@ -1813,19 +1932,31 @@ Review the results of the most recent A/B test run on the onboarding flow or pay
             title: "Session 11: ASA, ASO & Organic Growth — Görkem",
             content: `## Session 11: ASA, ASO & Organic Growth
 
-**Presenter:** Görkem
+Presenter: **Görkem**
 
-**Objective:** Understand our organic acquisition strategy and how Apple Search Ads complements paid channels.
+Objective: Understand our organic acquisition strategy and how Apple Search Ads complements paid channels.
+
+---
 
 ## Key Topics
 
-**App Store Optimization (ASO) Basics:** How we choose our keywords. The impact of our title, subtitle, and screenshots on conversion rates. How often we update these.
+**App Store Optimization (ASO) Basics**
 
-**Apple Search Ads (ASA):** How we structure our ASA campaigns. The difference between brand, generic, and competitor keyword bidding.
+How we choose our keywords. The impact of our title, subtitle, and screenshots on conversion rates. How often we update these.
 
-**The Synergy:** How running ASA helps our organic ASO rankings. How we use ASA performance data to improve our organic keyword strategy.
+**Apple Search Ads (ASA)**
 
-**Historical Context:** What organic growth initiatives we have tried over the last year. What worked, what failed, and why.
+How we structure our ASA campaigns. The difference between brand, generic, and competitor keyword bidding.
+
+**The Synergy**
+
+How running ASA helps our organic ASO rankings. How we use ASA performance data to improve our organic keyword strategy.
+
+**Historical Context**
+
+What organic growth initiatives we have tried over the last year. What worked, what failed, and why.
+
+---
 
 ## Practical Element
 
@@ -1837,21 +1968,35 @@ Open App Store Connect. Review the conversion rate of our App Store product page
             title: "Session 12: Payments, Stripe, Subscription Management & Xero — Furkan",
             content: `## Session 12: Payments, Stripe, Subscription Management & Xero
 
-**Presenter:** Furkan
+Presenter: **Furkan**
 
-**Objective:** Understand the operational backend of how money moves and how involuntary churn happens — this directly impacts the LTV numbers you will work with daily.
+Objective: Understand the operational backend of how money moves and how involuntary churn happens — this directly impacts the LTV numbers you will work with daily.
+
+---
 
 ## Key Topics
 
-**Stripe Walkthrough:** The Stripe dashboard. How we create products, prices, and coupons. Where we see revenue in real time.
+**Stripe Walkthrough**
 
-**Subscription Lifecycles:** The difference between active, past due, canceled, and unpaid subscription statuses, and what each means for our revenue reporting.
+The Stripe dashboard. How we create products, prices, and coupons. Where we see revenue in real time.
 
-**Dunning & Involuntary Churn:** What happens when a credit card fails. Our dunning logic — retries, grace periods, and recovery emails — and our current recovery rate.
+**Subscription Lifecycles**
 
-**Disputes & Chargebacks:** Our current chargeback rate. How we handle disputes to protect our merchant account.
+The difference between active, past due, canceled, and unpaid subscription statuses, and what each means for our revenue reporting.
 
-**Xero Integration:** How Stripe payouts sync to Xero for accounting purposes.
+**Dunning & Involuntary Churn**
+
+What happens when a credit card fails. Our dunning logic — retries, grace periods, and recovery emails — and our current recovery rate.
+
+**Disputes & Chargebacks**
+
+Our current chargeback rate. How we handle disputes to protect our merchant account.
+
+**Xero Integration**
+
+How Stripe payouts sync to Xero for accounting purposes.
+
+---
 
 ## Practical Element
 
@@ -1863,19 +2008,31 @@ Find a user in Stripe whose payment failed recently. Trace the automated steps t
             title: "Session 13: Customer Support & Service Workflows — Elif",
             content: `## Session 13: Customer Support & Service Workflows
 
-**Presenter:** Elif
+Presenter: **Elif**
 
-**Objective:** Understand the qualitative feedback loop — what users are complaining about and how that directly impacts churn and product decisions.
+Objective: Understand the qualitative feedback loop — what users are complaining about and how that directly impacts churn and product decisions.
+
+---
 
 ## Key Topics
 
-**The Support Stack:** The tool we use for support. How it is structured, and who handles what type of ticket.
+**The Support Stack**
 
-**Common Friction Points:** The top 3 reasons users contact support. These are the exact problems that, if solved in the product, would reduce churn.
+The tool we use for support. How it is structured, and who handles what type of ticket.
 
-**Refund & Cancellation Policy:** How we handle refund requests. Whether we have save offers when someone tries to cancel, and how effective they are.
+**Common Friction Points**
 
-**Feedback to Product:** How a recurring complaint in support turns into a product fix or an onboarding change. Who is responsible for closing this loop.
+The top 3 reasons users contact support. These are the exact problems that, if solved in the product, would reduce churn.
+
+**Refund & Cancellation Policy**
+
+How we handle refund requests. Whether we have save offers when someone tries to cancel, and how effective they are.
+
+**Feedback to Product**
+
+How a recurring complaint in support turns into a product fix or an onboarding change. Who is responsible for closing this loop.
+
+---
 
 ## Practical Element
 
@@ -1887,19 +2044,31 @@ Look at the last 10 support tickets related to "cancellation" together. Discuss 
             title: "Session 14: MoovBuddy AI Workflows — Görkem",
             content: `## Session 14: MoovBuddy AI Workflows
 
-**Presenter:** Görkem
+Presenter: **Görkem**
 
-**Objective:** Understand how we use AI internally to scale operations and how you can leverage it to move faster in your own role.
+Objective: Understand how we use AI internally to scale operations and how you can leverage it to move faster in your own role.
+
+---
 
 ## Key Topics
 
-**AI for Content Creation:** How we generate ad copy, email sequences, or SEO content using AI. The prompts and tools we use, and the quality control process.
+**AI for Content Creation**
 
-**AI for HR & Operations:** How we use AI to review job applicants and what the workflow looks like.
+How we generate ad copy, email sequences, or SEO content using AI. The prompts and tools we use, and the quality control process.
 
-**AI Podcast Generation:** The workflow for creating AI-generated podcasts from written content.
+**AI for HR & Operations**
 
-**Growth Applications:** Specifically how you can use AI to speed up your work — analyzing CSVs of user reviews, writing SQL queries for Metabase, or mocking up ad creative concepts before requesting them from the design team.
+How we use AI to review job applicants and what the workflow looks like.
+
+**AI Podcast Generation**
+
+The workflow for creating AI-generated podcasts from written content.
+
+**Growth Applications**
+
+Specifically how you can use AI to speed up your work — analyzing CSVs of user reviews, writing SQL queries for Metabase, or mocking up ad creative concepts before requesting them from the design team.
+
+---
 
 ## Practical Element
 
