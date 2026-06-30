@@ -118,6 +118,7 @@ model Person {
   url         String
   platform    String   @default("link")
   category    String   @default("General")
+  role        String   @default("creative-strategist")
   order       Int      @default(0)
   createdAt   DateTime @default(now())
 }

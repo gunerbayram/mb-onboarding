@@ -3,6 +3,10 @@ export const ROLES = [
     value: "creative-strategist",
     label: { tr: "Yaratıcı Stratejist", en: "Creative Strategist" },
   },
+  {
+    value: "growth-manager",
+    label: { tr: "Büyüme Yöneticisi", en: "Growth Manager" },
+  },
 ] as const;
 
 export type Role = (typeof ROLES)[number]["value"];

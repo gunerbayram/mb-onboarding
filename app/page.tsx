@@ -25,6 +25,7 @@ interface Chapter {
 interface UserData {
   id: string;
   name: string;
+  role: string;
   isAdmin: boolean;
   lessonProgress: { lessonId: string }[];
   quizAttempts: { quizId: string; score: number; totalQuestions: number }[];
@@ -48,6 +49,23 @@ interface Person {
   platform: string;
   category: string;
 }
+
+const ESSENTIAL_LEARNING_RESOURCES = [
+  { category: "Subscription App Business & Benchmarks", name: "State of Subscription Apps (RevenueCat)", description: "The single most important industry report. Read this to understand baseline metrics for conversion, churn, and pricing.", url: "https://www.revenuecat.com/state-of-subscription-apps-2024/" },
+  { category: "Subscription App Business & Benchmarks", name: "The Sub Club Podcast", description: "Hosted by RevenueCat. Deep-dive interviews with founders and growth leaders of successful subscription apps.", url: "https://www.revenuecat.com/sub-club/" },
+  { category: "Subscription App Business & Benchmarks", name: "Mobile Dev Memo", description: "Eric Seufert's blog. The best place to understand the strategic impact of privacy changes (ATT) and ad network dynamics.", url: "https://mobiledevmemo.com/" },
+  { category: "Product Analytics & Data Tools", name: "Amplitude Academy", description: "Free, high-quality courses on product analytics. Start with \"Product Analytics Fundamentals\" to master funnels and cohorts.", url: "https://academy.amplitude.com/" },
+  { category: "Product Analytics & Data Tools", name: "Metabase Learn - SQL & Dashboards", description: "Official tutorials for mastering Metabase, from visual query building to advanced SQL.", url: "https://www.metabase.com/learn/" },
+  { category: "Product Analytics & Data Tools", name: "Lenny's Newsletter - Growth Frameworks", description: "Comprehensive guides on product growth, retention, and onboarding optimization.", url: "https://www.lennysnewsletter.com/" },
+  { category: "Mobile Attribution & MMP", name: "AppsFlyer Mobile Attribution Guides", description: "The definitive guide to understanding how installs are tracked.", url: "https://www.appsflyer.com/resources/guides/mobile-attribution/" },
+  { category: "Mobile Attribution & MMP", name: "SKAdNetwork (SKAN) Solution Guide", description: "Crucial reading for understanding iOS attribution in the post-ATT world.", url: "https://www.appsflyer.com/resources/guides/skadnetwork/" },
+  { category: "Mobile Attribution & MMP", name: "Adapty Blog - Paywalls & In-App Purchases", description: "Excellent technical and strategic guides on implementing and tracking subscription events.", url: "https://adapty.io/blog/" },
+  { category: "User Acquisition & Paid Media", name: "Meta Blueprint", description: "Meta's official free training platform. Essential for mastering the mechanics of the Ads Manager, Campaign structure, and CAPI.", url: "https://www.facebook.com/business/learn" },
+  { category: "User Acquisition & Paid Media", name: "The Mobile User Acquisition Show", description: "Hosted by Shamanth Rao. Tactical, in-the-weeds discussions on paid UA strategies across Meta, TikTok, and ASA.", url: "https://www.rocketshiphq.com/podcast" },
+  { category: "Onboarding, Conversion & ASO", name: "Reforge Blog", description: "Advanced articles on conversion rate optimization, growth loops, and experiment design.", url: "https://www.reforge.com/blog" },
+  { category: "Onboarding, Conversion & ASO", name: "App Store Optimization (ASO) Guide", description: "Comprehensive guides on keyword research, screenshot optimization, and ranking factors for organic growth.", url: "https://www.appsflyer.com/resources/guides/app-store-optimization/" },
+  { category: "Onboarding, Conversion & ASO", name: "Adapty Paywall Optimization Guide", description: "Tactical advice on designing paywalls, pricing psychology, and trial lengths.", url: "https://adapty.io/blog/paywall-optimization/" },
+];
 
 type Tab = "learning" | "resources";
 
@@ -258,6 +276,9 @@ function HomePageInner() {
       localStorage.setItem("userName", me.name);
       localStorage.setItem("userId", me.id);
       localStorage.setItem("isAdmin", String(me.isAdmin));
+      if (me.role === "growth-manager") {
+        setResourceSubTab("people");
+      }
     }
     setLoading(false);
   }, []);
@@ -448,16 +469,18 @@ function HomePageInner() {
           <div>
             {/* Sub-tabs */}
             <div className="flex items-center gap-5 mb-5 border-b border-gray-200">
-              <button
-                onClick={() => setResourceSubTab("videos")}
-                className={`pb-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
-                  resourceSubTab === "videos"
-                    ? "text-indigo-600 border-indigo-600"
-                    : "text-gray-400 border-transparent hover:text-gray-600"
-                }`}
-              >
-                Videos
-              </button>
+              {userData?.role !== "growth-manager" && (
+                <button
+                  onClick={() => setResourceSubTab("videos")}
+                  className={`pb-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
+                    resourceSubTab === "videos"
+                      ? "text-indigo-600 border-indigo-600"
+                      : "text-gray-400 border-transparent hover:text-gray-600"
+                  }`}
+                >
+                  Videos
+                </button>
+              )}
               <button
                 onClick={() => setResourceSubTab("people")}
                 className={`pb-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
@@ -471,7 +494,7 @@ function HomePageInner() {
             </div>
 
             {/* Videos sub-tab */}
-            {resourceSubTab === "videos" && (() => {
+            {resourceSubTab === "videos" && userData?.role !== "growth-manager" && (() => {
               const categories = Array.from(new Set(resources.map((r) => r.category)));
               const filteredResources = resources.filter((r) => {
                 if (resourceFilter === "completed") return r.completed;
@@ -516,7 +539,7 @@ function HomePageInner() {
                         if (catVideos.length === 0) return null;
                         return (
                           <div key={cat}>
-                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-1">{cat}</p>
+                            <p className="text-xs font-semibold text-gray-400 tracking-wide mb-2 px-1">{cat.toLocaleUpperCase("en-US")}</p>
                             <div className="space-y-2">
                               {catVideos.map((resource) => (
                                 <ResourceCard key={resource.id} resource={resource} />
@@ -546,12 +569,50 @@ function HomePageInner() {
                   </div>
                 );
               }
-              const categories = Array.from(new Set(people.map((p) => p.category)));
+              const categories = Array.from(new Set(people.map((p) => p.category))).sort((a, b) => {
+                if (a === "Creative Strategy & Ad Creatives") return 1;
+                if (b === "Creative Strategy & Ad Creatives") return -1;
+                return 0;
+              });
               return (
                 <div className="flex flex-col gap-6">
+                  {userData?.role === "growth-manager" && (
+                    <div>
+                      <h3 className="text-xs font-semibold text-gray-400 tracking-wide mb-2 px-1">{"Essential Learning Resources".toLocaleUpperCase("en-US")}</h3>
+                      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-gray-100">
+                              <th className="text-left text-xs font-semibold text-gray-400 px-5 py-3 hidden sm:table-cell">Category</th>
+                              <th className="text-left text-xs font-semibold text-gray-400 px-5 py-3">Resource Name</th>
+                              <th className="text-left text-xs font-semibold text-gray-400 px-5 py-3 hidden sm:table-cell">Description</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100">
+                            {ESSENTIAL_LEARNING_RESOURCES.map((r, i) => (
+                              <tr key={i} className="hover:bg-gray-50 transition-colors">
+                                <td className="px-5 py-3 hidden sm:table-cell">
+                                  <span className="text-xs text-gray-500">{r.category}</span>
+                                </td>
+                                <td className="px-5 py-3">
+                                  <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">
+                                    {r.name}
+                                  </a>
+                                  <p className="text-xs text-gray-500 mt-0.5 sm:hidden line-clamp-2">{r.description}</p>
+                                </td>
+                                <td className="px-5 py-3 hidden sm:table-cell">
+                                  <p className="text-xs text-gray-500 line-clamp-2">{r.description}</p>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
                   {categories.map((cat) => (
                     <div key={cat}>
-                      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-1">{cat}</h3>
+                      <h3 className="text-xs font-semibold text-gray-400 tracking-wide mb-2 px-1">{cat.toLocaleUpperCase("en-US")}</h3>
                       <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                         <table className="w-full text-sm">
                           <thead>

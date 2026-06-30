@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { requireSession } from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  let session;
   try {
-    session = await requireSession(request);
+    await requireAdmin(request);
   } catch (e) {
     return e as Response;
   }
 
+  const role = request.nextUrl.searchParams.get("role") ?? "creative-strategist";
+
   const people = await prisma.person.findMany({
-    where: { role: session.role },
+    where: { role },
     orderBy: [{ category: "asc" }, { order: "asc" }],
   });
 
