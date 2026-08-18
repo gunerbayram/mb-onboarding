@@ -13,6 +13,7 @@
     "db:seed:uam": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-ua-manager.ts",
     "db:seed:mcc": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-marketing-content-creator.ts",
     "db:seed:mcc-quizzes": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-marketing-content-creator-quizzes.ts",
+    "db:seed:founder-chapter": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-founder-review-chapter.ts",
     "setup": "prisma generate && prisma db push && ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts"
   },
   "keywords": [],
