@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
   }
 
   const resources = await prisma.resource.findMany({
+    where: { role: session.role },
     orderBy: { order: "asc" },
     include: {
       progress: {

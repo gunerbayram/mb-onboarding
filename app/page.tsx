@@ -69,6 +69,9 @@ const ESSENTIAL_LEARNING_RESOURCES = [
 
 type Tab = "learning" | "resources";
 
+// Roles whose Resources tab only shows People & Channels (no Videos sub-tab).
+const PEOPLE_ONLY_RESOURCE_ROLES = ["growth-manager"];
+
 function getYouTubeThumbnail(url: string): string {
   const match = url.match(/[?&]v=([^&]+)/) ?? url.match(/youtu\.be\/([^?]+)/);
   const id = match?.[1] ?? "";
@@ -276,7 +279,7 @@ function HomePageInner() {
       localStorage.setItem("userName", me.name);
       localStorage.setItem("userId", me.id);
       localStorage.setItem("isAdmin", String(me.isAdmin));
-      if (me.role === "growth-manager") {
+      if (PEOPLE_ONLY_RESOURCE_ROLES.includes(me.role)) {
         setResourceSubTab("people");
       }
     }
@@ -469,7 +472,7 @@ function HomePageInner() {
           <div>
             {/* Sub-tabs */}
             <div className="flex items-center gap-5 mb-5 border-b border-gray-200">
-              {userData?.role !== "growth-manager" && (
+              {userData && !PEOPLE_ONLY_RESOURCE_ROLES.includes(userData.role) && (
                 <button
                   onClick={() => setResourceSubTab("videos")}
                   className={`pb-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
@@ -494,7 +497,7 @@ function HomePageInner() {
             </div>
 
             {/* Videos sub-tab */}
-            {resourceSubTab === "videos" && userData?.role !== "growth-manager" && (() => {
+            {resourceSubTab === "videos" && userData && !PEOPLE_ONLY_RESOURCE_ROLES.includes(userData.role) && (() => {
               const categories = Array.from(new Set(resources.map((r) => r.category)));
               const filteredResources = resources.filter((r) => {
                 if (resourceFilter === "completed") return r.completed;

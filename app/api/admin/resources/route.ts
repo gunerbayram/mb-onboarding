@@ -11,7 +11,10 @@ export async function GET(request: NextRequest) {
     return e as Response;
   }
 
+  const role = request.nextUrl.searchParams.get("role") ?? "creative-strategist";
+
   const resources = await prisma.resource.findMany({
+    where: { role },
     orderBy: [{ category: "asc" }, { order: "asc" }],
     select: {
       id: true,

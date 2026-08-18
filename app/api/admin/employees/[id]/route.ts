@@ -25,7 +25,8 @@ export async function GET(
       isAdmin: true,
       lessonProgress: { select: { lessonId: true } },
       quizAttempts: {
-        select: { quizId: true, score: true, totalQuestions: true },
+        select: { quizId: true, score: true, totalQuestions: true, completedAt: true },
+        orderBy: { completedAt: "desc" },
       },
       resourceProgress: { select: { resourceId: true } },
     },

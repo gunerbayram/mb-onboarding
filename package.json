@@ -9,6 +9,10 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "db:seed:uas": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-user-acquisition-specialist.ts",
+    "db:seed:uam": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-ua-manager.ts",
+    "db:seed:mcc": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-marketing-content-creator.ts",
+    "db:seed:mcc-quizzes": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-marketing-content-creator-quizzes.ts",
     "setup": "prisma generate && prisma db push && ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts"
   },
   "keywords": [],

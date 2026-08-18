@@ -25,6 +25,23 @@ interface RoleData {
   employees: RoleEmployee[];
 }
 
+interface CurriculumLesson {
+  id: string;
+  slug: string;
+  title: string;
+  order: number;
+}
+
+interface CurriculumChapter {
+  id: string;
+  slug: string;
+  order: number;
+  title: string;
+  description: string;
+  lessons: CurriculumLesson[];
+  quiz: { id: string } | null;
+}
+
 interface Employee {
   id: string;
   name: string;
@@ -49,6 +66,97 @@ function initials(name: string) {
 }
 
 /* ─── Sub-views ─────────────────────────────────────────────────── */
+
+function CurriculumBrowser({ roleValue }: { roleValue: string }) {
+  const [chapters, setChapters] = useState<CurriculumChapter[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [openChapterId, setOpenChapterId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`/api/admin/chapters?role=${roleValue}&include=lessons`)
+      .then((r) => r.json())
+      .then((data) => {
+        setChapters(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [roleValue]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (chapters.length === 0) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center">
+        <p className="text-sm text-gray-400">No chapters yet for this role.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {chapters.map((chapter, index) => {
+        const open = openChapterId === chapter.id;
+        return (
+          <div key={chapter.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <button
+              onClick={() => setOpenChapterId(open ? null : chapter.id)}
+              className="w-full flex items-center gap-3 p-4 hover:bg-gray-50 transition-colors text-left"
+            >
+              <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold shrink-0">
+                {index + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">{chapter.title}</p>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {chapter.lessons.length} lessons{chapter.quiz ? " · quiz" : ""}
+                </p>
+              </div>
+              <svg
+                className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {open && (
+              <div className="border-t border-gray-100 divide-y divide-gray-100">
+                {chapter.lessons.map((lesson) => (
+                  <Link
+                    key={lesson.id}
+                    href={`/learn/${chapter.slug}/${lesson.slug}`}
+                    className="flex items-center gap-2.5 px-4 py-2.5 pl-14 hover:bg-gray-50 transition-colors group"
+                  >
+                    <span className="text-xs text-gray-600 group-hover:text-indigo-600 transition-colors">
+                      {lesson.title}
+                    </span>
+                  </Link>
+                ))}
+                {chapter.quiz && (
+                  <Link
+                    href={`/learn/${chapter.slug}/quiz`}
+                    className="flex items-center gap-2.5 px-4 py-2.5 pl-14 hover:bg-gray-50 transition-colors group"
+                  >
+                    <span className="text-xs font-medium text-indigo-600">Quiz</span>
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function RoleView({ role }: { role: RoleData }) {
   const router = useRouter();
@@ -77,6 +185,12 @@ function RoleView({ role }: { role: RoleData }) {
             <p className="text-xs text-gray-500 mt-1">{s.label}</p>
           </div>
         ))}
+      </div>
+
+      {/* Curriculum */}
+      <h2 className="text-sm font-semibold text-gray-700 mb-3">Curriculum</h2>
+      <div className="mb-8">
+        <CurriculumBrowser roleValue={role.value} />
       </div>
 
       {/* Members */}

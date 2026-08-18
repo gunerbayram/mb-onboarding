@@ -104,6 +104,7 @@ model Resource {
   description String
   youtubeUrl  String
   category    String   @default("General")
+  role        String   @default("creative-strategist")
   order       Int      @default(0)
   createdAt   DateTime @default(now())
 

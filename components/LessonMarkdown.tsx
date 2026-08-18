@@ -51,8 +51,8 @@ function renderMarkdown(text: string): string {
     .replace(/^\d+\. (.+)$/gm, "<li class=\"ml-4 list-decimal text-sm text-gray-700 my-0.5\">$1</li>")
     // Wrap consecutive li items
     .replace(/((<li[^>]*>.*<\/li>\n?)+)/gs, "<ul class=\"my-3 space-y-0.5\">$1</ul>")
-    // Blockquotes
-    .replace(/^> (.+)$/gm, "<blockquote class=\"border-l-4 border-indigo-300 pl-4 my-3 italic text-gray-600 text-sm\">$1</blockquote>")
+    // Blockquotes (the ">" was already HTML-escaped to "&gt;" above)
+    .replace(/^&gt; (.+)$/gm, "<blockquote class=\"border-l-4 border-indigo-300 pl-4 my-3 italic text-gray-600 text-sm\">$1</blockquote>")
     // Horizontal rules
     .replace(/^---$/gm, "<hr class=\"my-6 border-gray-200\">")
     // Paragraphs (lines not starting with block-level HTML tags)

@@ -29,7 +29,7 @@ interface Employee {
   role: string;
   isAdmin: boolean;
   lessonProgress: { lessonId: string }[];
-  quizAttempts: { quizId: string; score: number; totalQuestions: number }[];
+  quizAttempts: { quizId: string; score: number; totalQuestions: number; completedAt: string }[];
   resourceProgress: { resourceId: string }[];
 }
 
@@ -67,6 +67,9 @@ const ESSENTIAL_LEARNING_RESOURCES = [
   { category: "Onboarding, Conversion & ASO", name: "App Store Optimization (ASO) Guide", description: "Comprehensive guides on keyword research, screenshot optimization, and ranking factors for organic growth.", url: "https://www.appsflyer.com/resources/guides/app-store-optimization/" },
   { category: "Onboarding, Conversion & ASO", name: "Adapty Paywall Optimization Guide", description: "Tactical advice on designing paywalls, pricing psychology, and trial lengths.", url: "https://adapty.io/blog/paywall-optimization/" },
 ];
+
+// Roles whose Resources tab only shows People & Channels (no Videos sub-tab).
+const PEOPLE_ONLY_RESOURCE_ROLES = ["growth-manager"];
 
 function getYouTubeThumbnail(url: string): string {
   const match = url.match(/[?&]v=([^&]+)/) ?? url.match(/youtu\.be\/([^?]+)/);
@@ -188,13 +191,13 @@ export default function AdminViewEmployeePage({
 
         const [chaptersRes, resourcesRes, peopleRes] = await Promise.all([
           fetch(`/api/admin/chapters?role=${emp.role}&include=lessons`),
-          fetch(`/api/admin/resources`),
+          fetch(`/api/admin/resources?role=${emp.role}`),
           fetch(`/api/admin/people?role=${emp.role}`),
         ]);
 
         if (chaptersRes.ok) setChapters(await chaptersRes.json());
         if (peopleRes.ok) setPeople(await peopleRes.json());
-        if (emp.role === "growth-manager") setResourceSubTab("people");
+        if (PEOPLE_ONLY_RESOURCE_ROLES.includes(emp.role)) setResourceSubTab("people");
         if (resourcesRes.ok) {
           const rawResources = await resourcesRes.json();
           setResources(
@@ -217,6 +220,13 @@ export default function AdminViewEmployeePage({
       .filter((a) => a.score / a.totalQuestions >= 0.6)
       .map((a) => a.quizId) ?? []
   );
+  // API returns quizAttempts ordered completedAt desc, so the first entry per quizId is the latest.
+  const attemptsByQuiz = new Map<string, Employee["quizAttempts"]>();
+  for (const attempt of employee?.quizAttempts ?? []) {
+    const list = attemptsByQuiz.get(attempt.quizId) ?? [];
+    list.push(attempt);
+    attemptsByQuiz.set(attempt.quizId, list);
+  }
 
   const totalLessons = chapters.reduce((sum, c) => sum + (c.lessons?.length ?? c._count.lessons), 0);
   const completedCount = chapters.reduce(
@@ -370,34 +380,67 @@ export default function AdminViewEmployeePage({
                             );
                           })}
 
-                          {chapter.quiz && (
-                            <div className="flex items-center gap-3 px-5 py-3">
-                              {quizPassed ? (
-                                <div className="w-5 h-5 rounded-full bg-green-500 shrink-0 flex items-center justify-center">
-                                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                                  </svg>
-                                </div>
-                              ) : (
-                                <div className="w-5 h-5 rounded-full border-2 border-gray-200 shrink-0 flex items-center justify-center">
-                                  {allLessonsDone ? (
-                                    <svg className="w-2.5 h-2.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                                    </svg>
+                          {chapter.quiz && (() => {
+                            const attempts = attemptsByQuiz.get(chapter.quiz.id) ?? [];
+                            const latest = attempts[0];
+                            const bestScore = attempts.reduce(
+                              (best, a) => (a.score / a.totalQuestions > best.score / best.totalQuestions ? a : best),
+                              attempts[0]
+                            );
+                            return (
+                              <div className="px-5 py-3">
+                                <div className="flex items-center gap-3">
+                                  {quizPassed ? (
+                                    <div className="w-5 h-5 rounded-full bg-green-500 shrink-0 flex items-center justify-center">
+                                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                      </svg>
+                                    </div>
                                   ) : (
-                                    <svg className="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                                    </svg>
+                                    <div className="w-5 h-5 rounded-full border-2 border-gray-200 shrink-0 flex items-center justify-center">
+                                      {allLessonsDone ? (
+                                        <svg className="w-2.5 h-2.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                                        </svg>
+                                      ) : (
+                                        <svg className="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                                        </svg>
+                                      )}
+                                    </div>
+                                  )}
+                                  <span className={`text-xs font-medium ${quizPassed ? "text-green-600" : allLessonsDone ? "text-indigo-600" : "text-gray-400"}`}>
+                                    Quiz
+                                  </span>
+                                  {attempts.length > 0 && (
+                                    <span className={`text-xs font-semibold ml-auto ${quizPassed ? "text-green-600" : "text-gray-500"}`}>
+                                      {bestScore.score}/{bestScore.totalQuestions} ({Math.round((bestScore.score / bestScore.totalQuestions) * 100)}%)
+                                    </span>
+                                  )}
+                                  {attempts.length === 0 && !allLessonsDone && (
+                                    <span className="text-xs text-gray-300 ml-auto">Locked</span>
+                                  )}
+                                  {attempts.length === 0 && allLessonsDone && (
+                                    <span className="text-xs text-gray-400 ml-auto">Not attempted</span>
                                   )}
                                 </div>
-                              )}
-                              <span className={`text-xs font-medium ${quizPassed ? "text-green-600" : allLessonsDone ? "text-indigo-600" : "text-gray-400"}`}>
-                                Quiz
-                              </span>
-                              {quizPassed && <span className="text-xs text-green-500 ml-auto">Passed</span>}
-                              {!quizPassed && !allLessonsDone && <span className="text-xs text-gray-300 ml-auto">Locked</span>}
-                            </div>
-                          )}
+                                {attempts.length > 0 && (
+                                  <div className="mt-2 ml-8 space-y-1">
+                                    {attempts.map((a, i) => (
+                                      <div key={i} className="flex items-center justify-between text-xs text-gray-400">
+                                        <span>
+                                          Attempt {attempts.length - i} · {new Date(a.completedAt).toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                                        </span>
+                                        <span className={a.score / a.totalQuestions >= 0.6 ? "text-green-500" : "text-gray-400"}>
+                                          {a.score}/{a.totalQuestions}
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </div>
                       </div>
                     );
@@ -411,7 +454,7 @@ export default function AdminViewEmployeePage({
               <div>
                 {/* Sub-tabs */}
                 <div className="flex items-center gap-5 mb-5 border-b border-gray-200">
-                  {employee?.role !== "growth-manager" && (
+                  {employee && !PEOPLE_ONLY_RESOURCE_ROLES.includes(employee.role) && (
                     <button
                       onClick={() => setResourceSubTab("videos")}
                       className={`pb-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
@@ -436,7 +479,7 @@ export default function AdminViewEmployeePage({
                 </div>
 
                 {/* Videos sub-tab */}
-                {resourceSubTab === "videos" && employee?.role !== "growth-manager" && (() => {
+                {resourceSubTab === "videos" && employee && !PEOPLE_ONLY_RESOURCE_ROLES.includes(employee.role) && (() => {
                   const categories = Array.from(new Set(resources.map((r) => r.category)));
                   const filteredResources = resources.filter((r) => {
                     if (resourceFilter === "completed") return r.completed;
