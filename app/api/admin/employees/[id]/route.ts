@@ -29,6 +29,7 @@ export async function GET(
         orderBy: { completedAt: "desc" },
       },
       resourceProgress: { select: { resourceId: true } },
+      resourceNotes: { select: { resourceId: true, content: true, updatedAt: true } },
     },
   });
 

@@ -31,6 +31,7 @@ interface Employee {
   lessonProgress: { lessonId: string }[];
   quizAttempts: { quizId: string; score: number; totalQuestions: number; completedAt: string }[];
   resourceProgress: { resourceId: string }[];
+  resourceNotes: { resourceId: string; content: string; updatedAt: string }[];
 }
 
 interface Resource {
@@ -40,6 +41,7 @@ interface Resource {
   youtubeUrl: string;
   category: string;
   completed: boolean;
+  notes: string;
 }
 
 interface Person {
@@ -115,9 +117,10 @@ function PlatformIcon({ platform }: { platform: string }) {
 
 function ResourceCard({ resource }: { resource: Resource }) {
   return (
+    <div className="bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-sm transition-all">
     <Link
       href={`/resources/${resource.id}`}
-      className="flex gap-4 bg-white border border-gray-200 rounded-2xl p-4 hover:border-indigo-300 hover:shadow-sm transition-all group"
+      className="flex gap-4 p-4 group"
     >
       <div className="relative shrink-0 w-28 rounded-xl overflow-hidden bg-gray-100">
         <img
@@ -163,6 +166,15 @@ function ResourceCard({ resource }: { resource: Resource }) {
         </div>
       </div>
     </Link>
+    {resource.notes.trim() && (
+      <details className="border-t border-gray-100 px-4 py-3">
+        <summary className="text-xs font-semibold text-indigo-600 cursor-pointer select-none">
+          Key Learnings
+        </summary>
+        <p className="text-sm text-gray-700 whitespace-pre-wrap mt-2">{resource.notes}</p>
+      </details>
+    )}
+    </div>
   );
 }
 
@@ -188,6 +200,7 @@ export default function AdminViewEmployeePage({
         setEmployee(emp);
 
         const completedResourceIds = new Set(emp.resourceProgress.map((p) => p.resourceId));
+        const notesByResource = new Map(emp.resourceNotes.map((n) => [n.resourceId, n.content]));
 
         const [chaptersRes, resourcesRes, peopleRes] = await Promise.all([
           fetch(`/api/admin/chapters?role=${emp.role}&include=lessons`),
@@ -201,9 +214,10 @@ export default function AdminViewEmployeePage({
         if (resourcesRes.ok) {
           const rawResources = await resourcesRes.json();
           setResources(
-            rawResources.map((r: Omit<Resource, "completed">) => ({
+            rawResources.map((r: Omit<Resource, "completed" | "notes">) => ({
               ...r,
               completed: completedResourceIds.has(r.id),
+              notes: notesByResource.get(r.id) ?? "",
             }))
           );
         }
